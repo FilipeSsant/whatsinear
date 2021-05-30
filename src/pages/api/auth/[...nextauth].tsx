@@ -11,6 +11,9 @@ export default NextAuth({
   ],
   jwt: {
     signingKey: process.env.JWT_AUTO_GENERATED_SIGNING_KEY,
+    verificationOptions: {
+      algorithms: ["HS512"],
+    },
   },
   callbacks: {
     async jwt(token, _, account) {

@@ -4,7 +4,7 @@ import Providers from "next-auth/providers";
 export default NextAuth({
   providers: [
     Providers.Spotify({
-      clientId: process.env.SPOTIFY_CLIENT_ID,
+      clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       scope: "user-top-read",
     }),

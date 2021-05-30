@@ -6,13 +6,15 @@ export function Footer() {
     <footer className={styles.footerContainer}>
       <div className={styles.linkContainer}>
         <FaLinkedin size={24} />
-        <a href="https://www.linkedin.com/in/filipe-da-silva-santos/">
+        <a
+          href="https://www.linkedin.com/in/filipe-da-silva-santos/"
+          target="_blank">
           Filipe Santos | Front End Developer
         </a>
       </div>
       <div className={styles.linkContainer}>
         <FaGithub size={24} />
-        <a href="hhttps://github.com/FilipeSsant/whatsinear">
+        <a href="hhttps://github.com/FilipeSsant/whatsinear" target="_blank">
           Project Repository
         </a>
       </div>

@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^15.6.0",
     "@types/react": "^17.0.6",
+    "node-jose-tools": "^1.6.28",
     "typescript": "^4.2.4"
   }
 }

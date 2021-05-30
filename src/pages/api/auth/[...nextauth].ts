@@ -9,6 +9,9 @@ export default NextAuth({
       scope: "user-top-read",
     }),
   ],
+  jwt: {
+    signingKey: process.env.JWT_AUTO_GENERATED_SIGNING_KEY,
+  },
   callbacks: {
     async jwt(token, _, account) {
       if (account) {
@@ -20,9 +23,6 @@ export default NextAuth({
     async session(session, user) {
       session.user = user;
       return session;
-    },
-    async redirect(url, baseUrl) {
-      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 });

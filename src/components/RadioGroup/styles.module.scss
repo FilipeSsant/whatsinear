@@ -1,0 +1,20 @@
+.radioGroup {
+  display: flex;
+
+  button + button {
+    margin-left: 1rem;
+  }
+
+  @media (max-width: 720px) {
+    width: 100%;
+    flex-direction: column;
+    button {
+      width: 100%;
+    }
+
+    button + button {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+}

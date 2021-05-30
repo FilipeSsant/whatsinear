@@ -1,0 +1,38 @@
+.pageNavigationHeader {
+  display: flex;
+  align-items: center;
+
+  > h3 {
+    font-weight: 500;
+    font-size: 2rem;
+    color: var(--white);
+  }
+}
+
+.pageNavigationActions {
+  display: flex;
+  margin-right: 1rem;
+
+  button + button {
+    margin-left: 1rem;
+  }
+}
+
+.pageNavigationButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  background: var(--space-grey);
+
+  border: 0;
+
+  &:disabled {
+    cursor: unset;
+    opacity: 0.5;
+  }
+}

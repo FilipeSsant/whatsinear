@@ -1,0 +1,54 @@
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+  background: var(--green);
+  height: 3rem;
+  border-radius: 3rem;
+
+  border: 0;
+
+  transition: filter 0.2s;
+  text-transform: uppercase;
+
+  span {
+    color: var(--white);
+    font-size: 0.875rem;
+  }
+
+  svg,
+  img {
+    margin-right: 0.5rem;
+  }
+
+  svg:last-child {
+    margin-left: 0.5rem;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+  }
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &.logged {
+    background: rgba(255, 255, 255, 0.1);
+    text-transform: unset;
+
+    span {
+      opacity: 0.6;
+    }
+  }
+
+  &.unselected {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}

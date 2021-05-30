@@ -1,0 +1,62 @@
+.mainContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  padding-bottom: 5rem;
+
+  > * + * {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 720px) {
+    margin-top: 2rem;
+  }
+}
+
+.mainHeroWithoutContent {
+  h1 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 2rem;
+
+    strong {
+      color: var(--green);
+    }
+  }
+
+  a {
+    cursor: pointer;
+    color: var(--green);
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+}
+
+.mainHeroCardsContent {
+  justify-content: center;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(224px, 224px));
+  grid-gap: 1rem;
+
+  padding-bottom: 2rem;
+
+  &.initialCardsOption {
+    justify-content: flex-start;
+
+    @media (max-width: 720px) {
+      justify-content: center;
+    }
+  }
+}
+
+.mainHeroOptionsContainer {
+  display: flex;
+  justify-content: center;
+}

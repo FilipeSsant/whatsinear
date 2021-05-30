@@ -2,7 +2,7 @@
 
 ### See the Web App Here
 
-### [What's In Ear App](https://www.google.com.br)
+### [What's In Ear App](https://whatsinear.vercel.app)
 
 ## About (Sobre)
 

@@ -12,7 +12,7 @@ export function Footer() {
       </div>
       <div className={styles.linkContainer}>
         <FaGithub size={24} />
-        <a href="https://www.linkedin.com/in/filipe-da-silva-santos/">
+        <a href="hhttps://github.com/FilipeSsant/whatsinear">
           Project Repository
         </a>
       </div>

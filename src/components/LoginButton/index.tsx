@@ -15,7 +15,7 @@ export function LoginButton() {
       <MdExitToApp size={16} color="#FFFFFF" opacity={0.6} />
     </Button>
   ) : (
-    <Button onClick={() => signIn("spotify", { redirect: false })}>
+    <Button onClick={() => signIn()}>
       <FaSpotify size={24} color="#FFFFFF" />
       <span>Login with Spotify</span>
     </Button>

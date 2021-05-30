@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
+import Head from "next/head";
 import { useState } from "react";
 import { Card } from "../components/Card";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
@@ -53,6 +54,9 @@ export default function ArtistsPage({
 
   return (
     <>
+      <Head>
+        <title>What's In Ear | Tracks</title>
+      </Head>
       <PageNavigationHeader title="Artists" />
       <div className={styles.mainHeroOptionsContainer}>
         <RadioGroup

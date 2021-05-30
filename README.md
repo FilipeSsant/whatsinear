@@ -1,8 +1,8 @@
-# What`s In Ear By Filipe Santos
+# What's In Ear By Filipe Santos
 
 ### See the Web App Here
 
-### [What`s In Ear App](https://www.google.com.br)
+### [What's In Ear App](https://www.google.com.br)
 
 ## About (Sobre)
 

@@ -5,7 +5,7 @@ export function Header() {
   return (
     <header>
       <div className={styles.headerContent}>
-        <strong>What's in ear 👂</strong>
+        <strong>What's In Ear 👂</strong>
         <LoginButton />
       </div>
     </header>

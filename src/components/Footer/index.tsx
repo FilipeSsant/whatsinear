@@ -14,7 +14,7 @@ export function Footer() {
       </div>
       <div className={styles.linkContainer}>
         <FaGithub size={24} />
-        <a href="hhttps://github.com/FilipeSsant/whatsinear" target="_blank">
+        <a href="https://github.com/FilipeSsant/whatsinear" target="_blank">
           Project Repository
         </a>
       </div>

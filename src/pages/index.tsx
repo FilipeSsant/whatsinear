@@ -24,7 +24,9 @@ export default function HomePage() {
           </p>
           <p>
             *This is a study application. All code is on:{" "}
-            <a>https://github.com.br</a>
+            <a href="https://github.com/FilipeSsant/whatsinear">
+              https://github.com/FilipeSsant/whatsinear
+            </a>
           </p>
           <LoginButton />
         </section>

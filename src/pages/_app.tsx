@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <NextAuthProvider
       options={{
-        clientMaxAge: 60,
+        clientMaxAge: 60 * 60 * 24, // 24 hours
       }}
       session={pageProps.session}>
       <Header />

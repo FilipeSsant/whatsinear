@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+import { getSession, signOut } from "next-auth/client";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../components/Card";
 import { EmptyContent } from "../components/EmptyContent";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
@@ -11,12 +11,14 @@ import { api } from "../services/api";
 import styles from "./home.module.scss";
 
 interface ArtistsPageProps {
+  hasResError: boolean;
   shortTerm: TrackProps[];
   mediumTerm: TrackProps[];
   longTerm: TrackProps[];
 }
 
 export default function ArtistsPage({
+  hasResError,
   shortTerm,
   mediumTerm,
   longTerm,
@@ -33,6 +35,12 @@ export default function ArtistsPage({
     medium_term: mediumTerm,
     long_term: longTerm,
   };
+
+  useEffect(() => {
+    if (hasResError) {
+      signOut();
+    }
+  }, [hasResError]);
 
   return (
     <>
@@ -60,7 +68,10 @@ export default function ArtistsPage({
                 .map((artist) => artist.name)
                 .join(", ")}`}
               preview={track.preview_url}
-              link={track.external_urls.spotify}
+              share={{
+                text: `I'm using What's in Ear App.\n Listen this track on Spotify ${track.external_urls.spotify}`,
+                uri: track.external_urls.spotify,
+              }}
             />
           ))}
         </section>
@@ -85,26 +96,45 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const shortTermResponse = await api.get("/me/top/tracks", {
-    params: { limit: 10, time_range: "short_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  let hasResError = false;
 
-  const mediumTermResponse = await api.get("/me/top/tracks", {
-    params: { limit: 10, time_range: "medium_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  let shortTermResponse = [];
+  let mediumTermResponse = [];
+  let longTermResponse = [];
 
-  const longTermResponse = await api.get("/me/top/tracks", {
-    params: { limit: 10, time_range: "long_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  const headers = { Authorization: `Bearer ${session.user.accessToken}` };
+
+  const promiseResult = Promise.all([
+    api.get("/me/top/tracks", {
+      params: { limit: 10, time_range: "short_term" },
+      headers,
+    }),
+    api.get("/me/top/tracks", {
+      params: { limit: 10, time_range: "medium_term" },
+      headers,
+    }),
+    api.get("/me/top/tracks", {
+      params: { limit: 10, time_range: "long_term" },
+      headers,
+    }),
+  ]);
+
+  await promiseResult
+    .then((response) => {
+      shortTermResponse = response[0].data.items;
+      mediumTermResponse = response[1].data.items;
+      longTermResponse = response[2].data.items;
+    })
+    .catch(() => {
+      hasResError = true;
+    });
 
   return {
     props: {
-      shortTerm: shortTermResponse.data.items,
-      mediumTerm: mediumTermResponse.data.items,
-      longTerm: longTermResponse.data.items,
+      hasResError,
+      shortTerm: shortTermResponse,
+      mediumTerm: mediumTermResponse,
+      longTerm: longTermResponse,
     },
   };
 };

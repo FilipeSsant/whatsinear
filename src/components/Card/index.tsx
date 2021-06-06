@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MdLink, MdPause, MdPlayArrow } from "react-icons/md";
+import { MdLink, MdNearMe, MdPause, MdPlayArrow } from "react-icons/md";
 import { toast } from "react-toastify";
 import { FabButton } from "../FabButton";
 import styles from "./styles.module.scss";
@@ -11,7 +11,11 @@ interface CardProps {
   title: string;
   description?: string;
   position?: number;
-  link?: string;
+  share?: {
+    text: string;
+    uri: string;
+  };
+  linkToGo?: string;
   preview?: string;
 }
 
@@ -21,7 +25,8 @@ export function Card({
   title,
   description,
   position,
-  link,
+  share,
+  linkToGo,
   preview,
   handleClick = () => {},
 }: CardProps) {
@@ -56,22 +61,29 @@ export function Card({
             <strong>{coverText}</strong>
           </div>
         )}
-        {link && (
+        {share && (
           <FabButton
             onClick={() => {
-              navigator.clipboard.writeText(
-                `Hey! I'm using whatsinear app\nListen this track on Spotify: ${link}`
-              );
+              navigator.clipboard.writeText(share.text);
               return toast("Time to share 🥳");
             }}
-            className={styles.linkFabButton}>
+            className={styles.leftFabButton}>
             <MdLink size={24} />
+          </FabButton>
+        )}
+        {linkToGo && (
+          <FabButton
+            onClick={() => {
+              window.open(linkToGo, "_blank");
+            }}
+            className={styles.rightFabButton}>
+            <MdNearMe size={24} />
           </FabButton>
         )}
         {preview && (
           <FabButton
             onClick={() => audioToggle()}
-            className={styles.previewFabButton}>
+            className={styles.rightFabButton}>
             {isAudioPlaying ? <MdPause size={24} /> : <MdPlayArrow size={24} />}
           </FabButton>
         )}

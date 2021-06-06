@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+import { getSession, signOut } from "next-auth/client";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "../components/Card";
 import { EmptyContent } from "../components/EmptyContent";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
@@ -11,12 +11,14 @@ import { api } from "../services/api";
 import styles from "./home.module.scss";
 
 interface ArtistsPageProps {
+  hasResError: boolean;
   shortTerm: ArtistProps[];
   mediumTerm: ArtistProps[];
   longTerm: ArtistProps[];
 }
 
 export default function ArtistsPage({
+  hasResError,
   shortTerm,
   mediumTerm,
   longTerm,
@@ -33,6 +35,12 @@ export default function ArtistsPage({
     medium_term: mediumTerm,
     long_term: longTerm,
   };
+
+  useEffect(() => {
+    if (hasResError) {
+      signOut();
+    }
+  }, [hasResError]);
 
   return (
     <>
@@ -52,14 +60,14 @@ export default function ArtistsPage({
         <section className={styles.mainHeroCardsContent}>
           {cardData[selectedTerm].map((artist, index) => (
             <Card
-              handleClick={() =>
-                window.open(artist.external_urls.spotify, "_blank")
-              }
               position={index + 1}
               key={artist.id}
               cover={artist.images[0].url}
               title={artist.name}
               description={artist.genres.join(", ")}
+              handleClick={() =>
+                window.open(artist.external_urls.spotify, "_blank")
+              }
             />
           ))}
         </section>
@@ -84,26 +92,45 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const shortTermResponse = await api.get("/me/top/artists", {
-    params: { limit: 10, time_range: "short_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  let hasResError = false;
 
-  const mediumTermResponse = await api.get("/me/top/artists", {
-    params: { limit: 10, time_range: "medium_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  let shortTermResponse = [];
+  let mediumTermResponse = [];
+  let longTermResponse = [];
 
-  const longTermResponse = await api.get("/me/top/artists", {
-    params: { limit: 10, time_range: "long_term" },
-    headers: { Authorization: `Bearer ${session.user.accessToken}` },
-  });
+  const headers = { Authorization: `Bearer ${session.user.accessToken}` };
+
+  const promiseResult = Promise.all([
+    api.get("/me/top/artists", {
+      params: { limit: 10, time_range: "short_term" },
+      headers,
+    }),
+    api.get("/me/top/artists", {
+      params: { limit: 10, time_range: "medium_term" },
+      headers,
+    }),
+    api.get("/me/top/artists", {
+      params: { limit: 10, time_range: "long_term" },
+      headers,
+    }),
+  ]);
+
+  await promiseResult
+    .then((response) => {
+      shortTermResponse = response[0].data.items;
+      mediumTermResponse = response[1].data.items;
+      longTermResponse = response[2].data.items;
+    })
+    .catch(() => {
+      hasResError = true;
+    });
 
   return {
     props: {
-      shortTerm: shortTermResponse.data.items,
-      mediumTerm: mediumTermResponse.data.items,
-      longTerm: longTermResponse.data.items,
+      hasResError,
+      shortTerm: shortTermResponse,
+      mediumTerm: mediumTermResponse,
+      longTerm: longTermResponse,
     },
   };
 };

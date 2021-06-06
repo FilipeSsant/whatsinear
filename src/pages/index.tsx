@@ -1,6 +1,7 @@
-import { useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Card } from "../components/Card";
 import { LoginButton } from "../components/LoginButton";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
@@ -9,6 +10,10 @@ import styles from "./home.module.scss";
 export default function HomePage() {
   const [session] = useSession();
   const router = useRouter();
+
+  useEffect(() => {
+    signOut();
+  }, []);
 
   return (
     <>

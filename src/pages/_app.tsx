@@ -1,6 +1,8 @@
 import { Provider as NextAuthProvider } from "next-auth/client";
 import { Router } from "next/router";
 import NProgress from "nprogress";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import "../styles/global.scss";
@@ -22,6 +24,10 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </main>
       <Footer />
+      <ToastContainer
+        position="bottom-center"
+        toastClassName={styles.toastContainer}
+      />
     </NextAuthProvider>
   );
 }

@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import Head from "next/head";
 import { useState } from "react";
 import { Card } from "../components/Card";
+import { EmptyContent } from "../components/EmptyContent";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
 import { RadioGroup } from "../components/RadioGroup";
 import { TrackProps } from "../libs/TracksPageProps";
@@ -20,36 +21,17 @@ export default function ArtistsPage({
   mediumTerm,
   longTerm,
 }: ArtistsPageProps) {
-  const [selectedTerm, setSelectedTerm] = useState("short_term");
+  const [selectedTerm, setSelectedTerm] = useState("long_term");
+  const options = [
+    { label: "All time", value: "long_term", selected: true },
+    { label: "Last 6 months", value: "medium_term" },
+    { label: "Last month", value: "short_term" },
+  ];
 
-  const RenderCards = {
-    short_term: shortTerm.map((track, index) => (
-      <Card
-        position={index + 1}
-        key={track.id}
-        cover={track.album.images[0].url}
-        title={track.name}
-        description={`${track.artists.map((artist) => artist.name).join(", ")}`}
-      />
-    )),
-    medium_term: mediumTerm.map((track, index) => (
-      <Card
-        position={index + 1}
-        key={track.id}
-        cover={track.album.images[0].url}
-        title={track.name}
-        description={`${track.artists.map((artist) => artist.name).join(", ")}`}
-      />
-    )),
-    long_term: longTerm.map((track, index) => (
-      <Card
-        position={index + 1}
-        key={track.id}
-        cover={track.album.images[0].url}
-        title={track.name}
-        description={`${track.artists.map((artist) => artist.name).join(", ")}`}
-      />
-    )),
+  const cardData: Record<string, TrackProps[]> = {
+    short_term: shortTerm,
+    medium_term: mediumTerm,
+    long_term: longTerm,
   };
 
   return (
@@ -57,22 +39,34 @@ export default function ArtistsPage({
       <Head>
         <title>What's In Ear | Tracks</title>
       </Head>
-      <PageNavigationHeader title="Artists" />
+      <PageNavigationHeader title="Tracks" />
       <div className={styles.mainHeroOptionsContainer}>
         <RadioGroup
           onRadioChange={(selectedRadio) =>
             setSelectedTerm(selectedRadio.value)
           }
-          values={[
-            { label: "Last month", value: "short_term", selected: true },
-            { label: "Last 6 months", value: "medium_term" },
-            { label: "All time", value: "long_term" },
-          ]}
+          values={options}
         />
       </div>
-      <section className={styles.mainHeroCardsContent}>
-        {RenderCards[selectedTerm]}
-      </section>
+      {cardData[selectedTerm].length ? (
+        <section className={styles.mainHeroCardsContent}>
+          {cardData[selectedTerm].map((track, index) => (
+            <Card
+              position={index + 1}
+              key={track.id}
+              cover={track.album.images[0].url}
+              title={track.name}
+              description={`${track.artists
+                .map((artist) => artist.name)
+                .join(", ")}`}
+              preview={track.preview_url}
+              link={track.external_urls.spotify}
+            />
+          ))}
+        </section>
+      ) : (
+        <EmptyContent />
+      )}
     </>
   );
 }

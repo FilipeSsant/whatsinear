@@ -36,15 +36,17 @@ export default function HomePage() {
           <div
             className={`${styles.mainHeroCardsContent} ${styles.initialCardsOption}`}>
             <Card
+              cover="https://images.unsplash.com/photo-1520872024865-3ff2805d8bb3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=521&q=80"
               handleClick={() => router.push("/artists")}
               coverText="Artists"
-              title="See Artists"
+              title="See Your Artists"
               description="See your top artists"
             />
             <Card
+              cover="https://images.unsplash.com/photo-1604907296594-240f842502e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=738&q=80"
               handleClick={() => router.push("/tracks")}
               coverText="Tracks"
-              title="See Tracks"
+              title="See Your Tracks"
               description="See your top tracks"
             />
           </div>

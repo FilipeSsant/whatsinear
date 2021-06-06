@@ -60,3 +60,12 @@
   display: flex;
   justify-content: center;
 }
+
+.toastContainer {
+  background: var(--grey-800);
+  color: var(--white);
+
+  button {
+    color: var(--white);
+  }
+}

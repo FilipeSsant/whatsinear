@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import Head from "next/head";
 import { useState } from "react";
 import { Card } from "../components/Card";
+import { EmptyContent } from "../components/EmptyContent";
 import { PageNavigationHeader } from "../components/PageNavigationHeader";
 import { RadioGroup } from "../components/RadioGroup";
 import { ArtistProps } from "../libs/ArtistsPageProps";
@@ -20,36 +21,17 @@ export default function ArtistsPage({
   mediumTerm,
   longTerm,
 }: ArtistsPageProps) {
-  const [selectedTerm, setSelectedTerm] = useState("short_term");
+  const [selectedTerm, setSelectedTerm] = useState("long_term");
+  const options = [
+    { label: "All time", value: "long_term", selected: true },
+    { label: "Last 6 months", value: "medium_term" },
+    { label: "Last month", value: "short_term" },
+  ];
 
-  const RenderCards = {
-    short_term: shortTerm.map((artist, index) => (
-      <Card
-        position={index + 1}
-        key={artist.id}
-        cover={artist.images[0].url}
-        title={artist.name}
-        description={artist.genres.join(", ")}
-      />
-    )),
-    medium_term: mediumTerm.map((artist, index) => (
-      <Card
-        position={index + 1}
-        key={artist.id}
-        cover={artist.images[0].url}
-        title={artist.name}
-        description={artist.genres.join(", ")}
-      />
-    )),
-    long_term: longTerm.map((artist, index) => (
-      <Card
-        position={index + 1}
-        key={artist.id}
-        cover={artist.images[0].url}
-        title={artist.name}
-        description={artist.genres.join(", ")}
-      />
-    )),
+  const cardData: Record<string, ArtistProps[]> = {
+    short_term: shortTerm,
+    medium_term: mediumTerm,
+    long_term: longTerm,
   };
 
   return (
@@ -63,16 +45,27 @@ export default function ArtistsPage({
           onRadioChange={(selectedRadio) =>
             setSelectedTerm(selectedRadio.value)
           }
-          values={[
-            { label: "Last month", value: "short_term", selected: true },
-            { label: "Last 6 months", value: "medium_term" },
-            { label: "All time", value: "long_term" },
-          ]}
+          values={options}
         />
       </div>
-      <section className={styles.mainHeroCardsContent}>
-        {RenderCards[selectedTerm]}
-      </section>
+      {cardData[selectedTerm].length ? (
+        <section className={styles.mainHeroCardsContent}>
+          {cardData[selectedTerm].map((artist, index) => (
+            <Card
+              handleClick={() =>
+                window.open(artist.external_urls.spotify, "_blank")
+              }
+              position={index + 1}
+              key={artist.id}
+              cover={artist.images[0].url}
+              title={artist.name}
+              description={artist.genres.join(", ")}
+            />
+          ))}
+        </section>
+      ) : (
+        <EmptyContent />
+      )}
     </>
   );
 }

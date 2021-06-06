@@ -6,6 +6,7 @@
 
 :root {
   --space-grey: #030303;
+  --grey-800: #2a2a2a;
   --gradient: linear-gradient(113.83deg, #121212 0.59%, #121212 99.74%);
   --white: #ffffff;
   --green: #66d36e;
@@ -42,7 +43,8 @@ body,
 input,
 textarea,
 select,
-button {
+button,
+.Toastify__toast-body {
   font-family: "Open Sans", sans-serif;
   font-size: 1rem;
   font-weight: 400;

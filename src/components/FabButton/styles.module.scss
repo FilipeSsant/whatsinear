@@ -1,0 +1,27 @@
+.fabButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  background-color: var(--green);
+
+  border: 0;
+
+  span {
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  svg {
+    fill: var(--white);
+    path {
+      fill: var(--white);
+    }
+  }
+}

@@ -18,7 +18,11 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
   return (
-    <NextAuthProvider session={pageProps.session}>
+    <NextAuthProvider
+      options={{
+        clientMaxAge: 60,
+      }}
+      session={pageProps.session}>
       <Header />
       <main className={styles.mainContainer}>
         <Component {...pageProps} />

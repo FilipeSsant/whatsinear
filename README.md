@@ -1,6 +1,6 @@
 # What's In Ear By Filipe Santos
 
-Using Next JS, TypeScript and Next Auth.
+App using Next JS, TypeScript and Next Auth.
 
 ## See the Web App Here
 

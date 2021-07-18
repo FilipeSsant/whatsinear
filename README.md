@@ -1,10 +1,12 @@
 # What's In Ear By Filipe Santos
 
-### See the Web App Here
+Using Next JS, TypeScript and Next Auth.
 
-### [What's In Ear App](https://whatsinear.vercel.app)
+## See the Web App Here
 
-## About (Sobre)
+[Open What's In Ear](https://whatsinear.vercel.app)
+
+## About
 
 Hi :)
 
@@ -17,11 +19,11 @@ Technologies used:
 - Next Auth
 - [SpotifyApi](https://developer.spotify.com). **All resources used to develop here is used only for study.**
 
-##
+## Sobre
 
 Oi :)
 
-Nesse aplicativo você pode entrar com sua conta Spotify e ver suas principais faixas e artitas filtrando por Último mês, 6 meses ou Desde o ínicio.
+Nesse aplicativo você pode entrar com sua conta Spotify e ver suas principais faixas e artistas filtrando por Último mês, 6 meses ou Desde o ínicio.
 
 Tecnologias utilizadas:
 
